@@ -1,11 +1,12 @@
 name: Aggiorna Dashboard AIFA
 
 on:
-  # Esegui ogni lunedì alle 06:00 UTC
   schedule:
     - cron: '0 6 * * 1'
-  # Permetti anche esecuzione manuale dal sito GitHub
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -19,6 +20,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Crea cartella docs se non esiste
+        run: mkdir -p docs
 
       - name: Esegui script di build
         run: python build_dashboard.py
